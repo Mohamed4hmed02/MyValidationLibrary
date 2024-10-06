@@ -14,7 +14,10 @@ namespace StartUp
 			};
 
 			var validator = new Validator<Test>(t);
-			var result = validator.RulesFor(t => t.Name).MustMatch(@"^[A,Z]").Validate();
+			validator.RulesFor(t => t.Name).MustEqual("");
+			validator.RulesFor(t => t.Size).MustEqual(55);
+
+			var result = validator.Validate();
 			Console.WriteLine(result.IsValid);
 			foreach (var failure in result.Errors)
 			{

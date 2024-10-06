@@ -8,14 +8,17 @@ namespace MyValidationLibrary
 	{
 		private readonly PropertyInfo? _property;
 		private readonly object _instance;
-		private readonly List<FailureResult> _failures;
+		private readonly IList<FailureResult> _failures;
 		private readonly bool _isNull;
 		private readonly object? _value;
-		
-		public RulesBuilder(PropertyInfo info, object instance)
+
+		public RulesBuilder(
+			PropertyInfo? info,
+			object instance,
+			IList<FailureResult> failures)
 		{
 			_property = info;
-			_failures = [];
+			_failures = failures;
 			_instance = instance;
 			_isNull = _property?.GetValue(_instance) is null;
 			_value = _property?.GetValue(_instance);
@@ -23,7 +26,6 @@ namespace MyValidationLibrary
 
 		public RulesBuilder NotNull()
 		{
-
 			if (_isNull)
 			{
 				_failures.Add(new FailureResult
@@ -75,7 +77,7 @@ namespace MyValidationLibrary
 		public RulesBuilder MustMatch(string pattern)
 		{
 			var stringValue = _value as string;
-			if (stringValue is null || !Regex.IsMatch(@stringValue, pattern))
+			if (stringValue is null || !Regex.IsMatch(stringValue, pattern))
 			{
 				_failures.Add(new FailureResult
 				{
@@ -84,11 +86,6 @@ namespace MyValidationLibrary
 				});
 			}
 			return this;
-		}
-
-		public ValidationResult Validate()
-		{
-			return new ValidationResult(_failures);
 		}
 	}
 }

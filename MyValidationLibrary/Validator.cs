@@ -4,14 +4,14 @@ using System.Linq.Expressions;
 namespace MyValidationLibrary
 {
 	/// <summary>
-	/// Used To Validate Your Custom Validations
+	/// Used To Validate <typeparamref name="T"/>
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="instance"></param>
 	public class Validator<T>(T instance) where T : class
 	{
 		private readonly List<List<FailureResult>> _failures = [];
-
+		
 		public RulesBuilder RulesFor<TProperty>(Expression<Func<T, TProperty>> expression)
 		{
 			var type = typeof(T);

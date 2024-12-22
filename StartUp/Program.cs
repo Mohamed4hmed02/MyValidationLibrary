@@ -1,4 +1,5 @@
-﻿using MyValidationLibrary;
+﻿using MyValidationLibraryV2;
+using System.Text.RegularExpressions;
 
 namespace StartUp
 {
@@ -6,22 +7,28 @@ namespace StartUp
 	{
 		static void Main(string[] args)
 		{
-			var t = new Test
+			var t1 = new Test
 			{
-				Name = "Bhmed",
+				Name = "Ahmed",
 				Size = 55,
 				Password = "null"
 			};
 
-			var validator = new Validator<Test>(t);
-			validator.RulesFor(t => t.Name).MustEqual("");
-			validator.RulesFor(t => t.Size).MustEqual(55);
-
-			var result = validator.Validate();
-			Console.WriteLine(result.IsValid);
-			foreach (var failure in result.Errors)
+			var t2 = new Test
 			{
-				Console.WriteLine(failure.Message);
+				Name = "Ahmed",
+				Size = 55,
+				Password = "3Password"
+			};
+
+			var validator = new ValidatorV2<Test>();
+			validator.GetPropertyRuleBuilder(t => t.Size).HasMaxLength(5);
+			validator.GetPropertyRuleBuilder(t => t.Password).HasMinLength(1);
+			validator.GetPropertyRuleBuilder(t => t.Password).MustMatch(new Regex("^3"));
+			var res = validator.Validate(t1);
+			foreach (var fail in res.Errors)
+			{
+				Console.WriteLine(fail.Message);
 			}
 		}
 	}

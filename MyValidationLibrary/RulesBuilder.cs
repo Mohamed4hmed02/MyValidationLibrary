@@ -10,9 +10,10 @@ namespace MyValidationLibrary
 		private readonly object _instance;
 		private readonly IList<FailureResult> _failures;
 		private readonly bool _isNull;
+		private readonly bool _execute;
 		private readonly object? _value;
 
-		public RulesBuilder(
+		internal RulesBuilder(
 			PropertyInfo? info,
 			object instance,
 			IList<FailureResult> failures)
@@ -22,6 +23,7 @@ namespace MyValidationLibrary
 			_instance = instance;
 			_isNull = _property?.GetValue(_instance) is null;
 			_value = _property?.GetValue(_instance);
+			_execute = false;
 		}
 
 		public RulesBuilder NotNull()

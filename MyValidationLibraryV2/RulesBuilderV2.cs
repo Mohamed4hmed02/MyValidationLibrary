@@ -8,20 +8,20 @@ namespace MyValidationLibraryV2
 	/// Contains The Rules Method
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class RulesBuilder<T>
+	public class RulesBuilderV2<T>
 	{
 		private readonly IList<CustomeStructure> _compiledDelegates;
 		private readonly string _propName;
 		private readonly Type _propType;
 
-		internal RulesBuilder(IList<CustomeStructure> delegates, string propName, Type propType)
+		internal RulesBuilderV2(IList<CustomeStructure> delegates, string propName, Type propType)
 		{
 			_compiledDelegates = delegates;
 			_propName = propName;
 			_propType = propType;
 		}
 
-		public RulesBuilder<T> HasMaxLength(int maxLength)
+		public RulesBuilderV2<T> HasMaxLength(int maxLength)
 		{
 			ParameterExpression left = Expression.Parameter(typeof(object));
 			ConstantExpression constant = Expression.Constant(maxLength);
@@ -46,7 +46,7 @@ namespace MyValidationLibraryV2
 			return this;
 		}
 
-		public RulesBuilder<T> HasMinLength(int minLength)
+		public RulesBuilderV2<T> HasMinLength(int minLength)
 		{
 			ParameterExpression left = Expression.Parameter(typeof(object));
 			ConstantExpression constant = Expression.Constant(minLength);
@@ -71,7 +71,7 @@ namespace MyValidationLibraryV2
 			return this;
 		}
 
-		public RulesBuilder<T> MustMatch(Regex regex)
+		public RulesBuilderV2<T> MustMatch(Regex regex)
 		{
 			if (_propType != typeof(string))
 				return this;

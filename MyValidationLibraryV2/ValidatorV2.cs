@@ -12,10 +12,10 @@ namespace MyValidationLibraryV2
 	{
 		private readonly IList<CustomeStructure> structure = [];
 
-		public RulesBuilder<Tprop> GetPropertyRuleBuilder<Tprop>(Expression<Func<T, Tprop>> propertyRuleBuilder)
+		public RulesBuilderV2<Tprop> GetPropertyRuleBuilder<Tprop>(Expression<Func<T, Tprop>> propertyRuleBuilder)
 		{
 			var property = (propertyRuleBuilder.Body as MemberExpression);
-			return new RulesBuilder<Tprop>(structure, property.Member.Name, property.Type);
+			return new RulesBuilderV2<Tprop>(structure, property.Member.Name, property.Type);
 		}
 
 		/// <summary>
